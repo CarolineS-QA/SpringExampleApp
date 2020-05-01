@@ -41,6 +41,6 @@ public class NoteService {
             throw new NoteNotFoundException();
         }
         this.repo.deleteById(id);
-        return this.repo.existsById(id);
+        return this.repo.existsById(id); // returns false if successful, because it no longer exists
     }
 }
