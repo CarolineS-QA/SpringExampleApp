@@ -29,6 +29,7 @@ public class NoteService {
         return this.repo.findById(id).orElseThrow(NoteNotFoundException::new);
     }
 
+    // This way, it will keep the original data if it has not been changed?
     public Note updateNote(Long id, Note note){
         Note update = findNoteById(id);
         update.setTitle(note.getTitle());
@@ -36,11 +37,14 @@ public class NoteService {
         return this.repo.save(update);
     }
 
+    /* Returns false if successful, because it no longer exists.
+     * This allows for a more meaningful test.
+     */
     public boolean deleteNote(Long id){
         if(!this.repo.existsById(id)){
             throw new NoteNotFoundException();
         }
         this.repo.deleteById(id);
-        return this.repo.existsById(id); // returns false if successful, because it no longer exists
+        return this.repo.existsById(id);
     }
 }
